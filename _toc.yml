@@ -1,0 +1,6 @@
+format: jb-book
+root: docs/intro.md
+parts:
+  - caption: Data visualization
+    chapters:
+    - file: docs/plotly-template.ipynb
