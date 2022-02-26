@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data Driven &#8212; Data Driven</title>
+    <title>Numerical grouped by categorical &#8212; Data Driven</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,7 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Numerical data" href="numeric-data.html" />
+    <link rel="next" title="Relationships" href="relationships.html" />
+    <link rel="prev" title="Categorical data" href="categorical-data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -91,8 +92,8 @@ const thebe_selector_output = ".output, .cell_output"
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1 current">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
    Data Driven
   </a>
  </li>
@@ -102,7 +103,7 @@ const thebe_selector_output = ".output, .cell_output"
   Data visualization
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="numeric-data.html">
    Numerical data
@@ -113,8 +114,8 @@ const thebe_selector_output = ".output, .cell_output"
    Categorical data
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="numeric-categorical.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Numerical grouped by categorical
   </a>
  </li>
@@ -176,7 +177,7 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/docs/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/docs/numeric-categorical.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -196,7 +197,7 @@ const thebe_selector_output = ".output, .cell_output"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/kirenz/data-driven/issues/new?title=Issue%20on%20page%20%2Fdocs/intro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/kirenz/data-driven/issues/new?title=Issue%20on%20page%20%2Fdocs/numeric-categorical.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -224,7 +225,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Data Driven</h1>
+                <h1>Numerical grouped by categorical</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -235,16 +236,34 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="data-driven">
-<h1>Data Driven<a class="headerlink" href="#data-driven" title="Permalink to this headline">¶</a></h1>
-<p>In this book we’ll cover the basics of data driven decision making with data visualization.</p>
-<hr class="docutils" />
-<p>This online work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.</p>
-<p><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"/></a><br /></p>
-<p>This website is built with <a class="reference external" href="https://jupyterbook.org/intro.html">Jupyter Book</a>. <a target="_blank" href="https://icons8.de/icon/aL7NtSh6zELd/streudiagramm"> </a> Logo by <a target="_blank" href="https://icons8.de">Icons8</a></p>
-<div class="toctree-wrapper compound">
+  <div class="tex2jax_ignore mathjax_ignore section" id="numerical-grouped-by-categorical">
+<h1>Numerical grouped by categorical<a class="headerlink" href="#numerical-grouped-by-categorical" title="Permalink to this headline">¶</a></h1>
+<p>We can also investigate numerical data grouped by categorical data:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># median</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_cat</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_train</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_cat</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_train</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># standard deviation</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_cat</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_train</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+<br>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRKNIZnYToIwcsrhiYqbX1gf5rvhPDXh7SACeg7YlokmKB85840iyG_zjbWrQIHwkhFjzROFous1noj/embed?start=false&loop=false&delayms=3000" frameborder="0" width="820" height="520" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<br>
+<div class="tip admonition">
+<p class="admonition-title">Resources</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.google.com/presentation/d/1GDhWpIMsyFWA2lZP9NERyncL84W3HuIkylendbVfq-g/export/pdf">Download slides</a></p></li>
+<li><p>Colab: <a class="reference external" href="https://colab.research.google.com/github/kirenz/modern-statistics/blob/main/04-6-comparisons-across-groups.ipynb">Comparisons across groups</a></p></li>
+<li><p>Reading: <a class="reference external" href="https://openintro-ims.netlify.app/explore-categorical.html#comparing-numerical-data-across-groups">Introduction to Modern Statistics (2021)</a></p></li>
+</ul>
 </div>
 </div>
 
@@ -272,11 +291,18 @@ const thebe_selector_output = ".output, .cell_output"
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="numeric-data.html" title="next page">
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="categorical-data.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Categorical data</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="relationships.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Numerical data</p>
+        <p class="prev-next-title">Relationships</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
