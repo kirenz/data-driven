@@ -3,7 +3,10 @@ root: docs/intro.md
 parts:
   - caption: Data visualization
     chapters:
-    - file: docs/data-visualization.md
+    - file: docs/numeric-data.md  
+    - file: docs/categorical-data.md
+    - file: docs/numeric-categorical.md
+    - file: docs/relationships.md
   - caption: Plotly
     chapters:
     - file: docs/plotly-template.ipynb
