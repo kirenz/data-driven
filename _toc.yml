@@ -3,4 +3,7 @@ root: docs/intro.md
 parts:
   - caption: Data visualization
     chapters:
+    - file: docs/data-visualization.md
+  - caption: Plotly
+    chapters:
     - file: docs/plotly-template.ipynb
