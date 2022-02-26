@@ -1,6 +1,6 @@
 # Data Driven
 
-In this book we'll cover the basics of data driven decision making.
+In this book we'll cover the basics of data driven decision making with data visualization.
 
 ---
 
