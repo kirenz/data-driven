@@ -1,0 +1,2006 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logistic regression &#8212; Introduction to Classification</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Introduction to Classification</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome
+  </a>
+ </li>
+</ul>
+<p class="caption" role="heading">
+ <span class="caption-text">
+  Algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="logistic.html">
+   Logistic Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lda_qda.html">
+   Discriminant Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="knn.html">
+   K Nearest Neighbors
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/docs/logistic-regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/kirenz/classification"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/kirenz/classification/issues/new?title=Issue%20on%20page%20%2Fdocs/logistic-regression.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/kirenz/classification/blob/main/docs/logistic-regression.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#world-happiness-report">
+   World happiness report
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#task-description">
+   Task Description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-setup">
+   Python setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   Data preparation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tidying-data">
+   Tidying data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-inspection">
+     Data inspection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rename-and-missing">
+   1.1 Rename and missing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-flag">
+   1.2 Create flag
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#drop-and-data-format">
+   1.3 Drop and data format
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#distribution">
+   1.4 Distribution
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#correlation">
+   1.5 Correlation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-model-with-all-predictors">
+   2a) Model with all predictors
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#b-update-model">
+   2. b) Update Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-predict">
+   2c) Predict
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#d-confusion-matrix-metrics">
+   2. d) Confusion Matrix &amp; Metrics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#e-use-train-test-data">
+   2. e) Use train test data
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="logistic-regression">
+<h1>Logistic regression<a class="headerlink" href="#logistic-regression" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="world-happiness-report">
+<h2>World happiness report<a class="headerlink" href="#world-happiness-report" title="Permalink to this headline">¶</a></h2>
+<p>The World Happiness Report ranks 156 countries by their happiness levels (<code class="docutils literal notranslate"><span class="pre">Happiness.Score</span></code>). The rankings come from the Gallup World Poll and are based on answers to the main life evaluation question asked in the poll. This is called the Cantril ladder: it asks respondents to think of a ladder, with the best possible life for them being a 10, and the worst possible life being a 0. They are then asked to rate their own current lives on that 0 to 10 scale. The rankings are from nationally representative samples, for the years 2013-2015. They are based entirely on the survey scores, using the Gallup weights to make the estimates representative.</p>
+<p>The other variables in the dataset show the estimated extent to which each of the factors contribute to making life evaluations higher in each country than they are in Dystopia, a hypothetical country that has values equal to the world’s lowest national averages for each of the factors (for more information about the data, visit this <a class="reference external" href="https://s3.amazonaws.com/happiness-report/2016/FAQ_2016.pdf">FAQ-site</a> or the <a class="reference external" href="http://worldhappiness.report/ed/2016/">World Happiness Report-site</a>).</p>
+<p>Data Source:</p>
+<p><em>Helliwell, J., Layard, R., &amp; Sachs, J. (2016). World Happiness Report 2016, Update (Vol. I).
+New York: Sustainable Development Solutions Network.</em></p>
+</div>
+<div class="section" id="task-description">
+<h2>Task Description<a class="headerlink" href="#task-description" title="Permalink to this headline">¶</a></h2>
+<p>In this assignment, we analyse the relationship between the country specific happiness and some predictor variables. In particular, we want to classify which countries are likely to be “happy”.</p>
+<p>Data preparation:</p>
+<ul class="simple">
+<li><p>1.1 Rename the variables in the DataFrame to ‘Country’, ‘Happiness_Score’, ‘Economy’, ‘Family’, ‘Health’ and ‘Trust’. Check for missing values.</p></li>
+<li><p>1.2 Create a new categorical variable called <code class="docutils literal notranslate"><span class="pre">Happy</span></code>, where all countries with a Happiness_Score &gt; 5.5 are labeled with ‘Yes’, otherwise ‘No’.</p></li>
+<li><p>1.3 Delete the variable <code class="docutils literal notranslate"><span class="pre">Happiness_Score</span></code> and change the data types if necessary (categorical, float, integer…).</p></li>
+<li><p>1.4 Visualize the distributions of the numerical variables and display the distributions of the two groups (Happy: ‘Yes’ and ‘No’).</p></li>
+<li><p>1.5. Check for relationships with correlations.</p></li>
+</ul>
+<p>Logistic regression model:</p>
+<ul class="simple">
+<li><p>2.a) Fit a logistic regression model with all predictor variables (response: <code class="docutils literal notranslate"><span class="pre">Happy</span></code>; predictors: <code class="docutils literal notranslate"><span class="pre">Economy</span></code>, <code class="docutils literal notranslate"><span class="pre">Family</span></code>, <code class="docutils literal notranslate"><span class="pre">Health</span></code> and <code class="docutils literal notranslate"><span class="pre">Trust</span></code>).</p></li>
+<li><p>2.b) Please explain wether you would recommend to exclude a predictor variable from your model (from task 2a)). Update your model if necessary.</p></li>
+<li><p>2.c) Use your updated model and predict the probability that a country has “no happy” inhabitants. Classify this countries with label ‘Yes’ if the predicted probability exceeds:</p>
+<ul>
+<li><p>c1): 0.4 (i.e. threshold = 0.4)</p></li>
+<li><p>c2): 0.5 (i.e. threshold = 0.5)</p></li>
+<li><p>c3): 0.7 (i.e. threshold = 0.7).</p></li>
+</ul>
+</li>
+</ul>
+<p>Otherwise classify the country as happy (with label ‘No’).</p>
+<ul class="simple">
+<li><p>2.d) Compute the confusion matrix for every threshold (c1), c2) and c3)) in order to determine how many observations were correctly or incorrectly classified. Furthermore, use the results from the confusion matrix and create the following variables: true positive; true negative; false positive and false negative. Use these variables to calculate the following measures: “Accuracy”, Precision” (what proportion of positive identifications was actually correct?), “Recall” (what proportion of actual positives was identified correctly) and the F1 score (measure of a test’s accuracy) for the thresholds in c1), c2) and c3). Which threshold would you recommend?</p></li>
+</ul>
+<p>Hints: <strong>Precision</strong> is defined as the number of true positives over the number of true positives plus the number of false positives. <strong>Recall</strong> is defined as the number of true positives over the number of true positives plus the number of false negatives. These two quantities are related to the <strong>F1 score</strong>, which is defined as the harmonic mean of precision and recall: <span class="math notranslate nohighlight">\(F1 = 2* ((Precision * Recall)/(Precision + Recall)).\)</span></p>
+<ul class="simple">
+<li><p>2.e) Fit the logistic regression model using a training data set. Compute the confusion matrix and accuracy for the held out data (test data size = 30%). Use a threshold of 0.5.</p></li>
+</ul>
+</div>
+<div class="section" id="python-setup">
+<h2>Python setup<a class="headerlink" href="#python-setup" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span><span class="p">,</span> <span class="n">fisher_exact</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="data-preparation">
+<h2>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the csv data files into pandas dataframes</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/kirenz/datasets/master/happy.csv&#39;</span> 
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">PATH</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tidying-data">
+<h2>Tidying data<a class="headerlink" href="#tidying-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-inspection">
+<h3>Data inspection<a class="headerlink" href="#data-inspection" title="Permalink to this headline">¶</a></h3>
+<p>First of all, let’s take a look at the data set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show data set</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>Country</th>
+      <th>Happiness.Score</th>
+      <th>Economy..GDP.per.Capita.</th>
+      <th>Family</th>
+      <th>Health..Life.Expectancy.</th>
+      <th>Trust..Government.Corruption.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Denmark</td>
+      <td>7.526</td>
+      <td>1.44178</td>
+      <td>1.16374</td>
+      <td>0.79504</td>
+      <td>0.44453</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Switzerland</td>
+      <td>7.509</td>
+      <td>1.52733</td>
+      <td>1.14524</td>
+      <td>0.86303</td>
+      <td>0.41203</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Iceland</td>
+      <td>7.501</td>
+      <td>1.42666</td>
+      <td>1.18326</td>
+      <td>0.86733</td>
+      <td>0.14975</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Norway</td>
+      <td>7.498</td>
+      <td>1.57744</td>
+      <td>1.12690</td>
+      <td>0.79579</td>
+      <td>0.35776</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Finland</td>
+      <td>7.413</td>
+      <td>1.40598</td>
+      <td>1.13464</td>
+      <td>0.81091</td>
+      <td>0.41004</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>153</td>
+      <td>Benin</td>
+      <td>3.484</td>
+      <td>0.39499</td>
+      <td>0.10419</td>
+      <td>0.21028</td>
+      <td>0.06681</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>154</td>
+      <td>Afghanistan</td>
+      <td>3.360</td>
+      <td>0.38227</td>
+      <td>0.11037</td>
+      <td>0.17344</td>
+      <td>0.07112</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>155</td>
+      <td>Togo</td>
+      <td>3.303</td>
+      <td>0.28123</td>
+      <td>0.00000</td>
+      <td>0.24811</td>
+      <td>0.11587</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>156</td>
+      <td>Syria</td>
+      <td>3.069</td>
+      <td>0.74719</td>
+      <td>0.14866</td>
+      <td>0.62994</td>
+      <td>0.17233</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>157</td>
+      <td>Burundi</td>
+      <td>2.905</td>
+      <td>0.06831</td>
+      <td>0.23442</td>
+      <td>0.15747</td>
+      <td>0.09419</td>
+    </tr>
+  </tbody>
+</table>
+<p>157 rows × 7 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Drop variables</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Happiness.Score</th>
+      <th>Economy..GDP.per.Capita.</th>
+      <th>Family</th>
+      <th>Health..Life.Expectancy.</th>
+      <th>Trust..Government.Corruption.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>157.000000</td>
+      <td>157.000000</td>
+      <td>157.000000</td>
+      <td>157.000000</td>
+      <td>157.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>5.382185</td>
+      <td>0.953880</td>
+      <td>0.793621</td>
+      <td>0.557619</td>
+      <td>0.137624</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.141674</td>
+      <td>0.412595</td>
+      <td>0.266706</td>
+      <td>0.229349</td>
+      <td>0.111038</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2.905000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>4.404000</td>
+      <td>0.670240</td>
+      <td>0.641840</td>
+      <td>0.382910</td>
+      <td>0.061260</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>5.314000</td>
+      <td>1.027800</td>
+      <td>0.841420</td>
+      <td>0.596590</td>
+      <td>0.105470</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>6.269000</td>
+      <td>1.279640</td>
+      <td>1.021520</td>
+      <td>0.729930</td>
+      <td>0.175540</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>7.526000</td>
+      <td>1.824270</td>
+      <td>1.183260</td>
+      <td>0.952770</td>
+      <td>0.505210</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="rename-and-missing">
+<h2>1.1 Rename and missing<a class="headerlink" href="#rename-and-missing" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Country&#39;</span><span class="p">,</span> <span class="s1">&#39;Happiness_Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Economy&#39;</span><span class="p">,</span> <span class="s1">&#39;Family&#39;</span><span class="p">,</span> <span class="s1">&#39;Health&#39;</span><span class="p">,</span> <span class="s1">&#39;Trust&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country</th>
+      <th>Happiness_Score</th>
+      <th>Economy</th>
+      <th>Family</th>
+      <th>Health</th>
+      <th>Trust</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Denmark</td>
+      <td>7.526</td>
+      <td>1.44178</td>
+      <td>1.16374</td>
+      <td>0.79504</td>
+      <td>0.44453</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Switzerland</td>
+      <td>7.509</td>
+      <td>1.52733</td>
+      <td>1.14524</td>
+      <td>0.86303</td>
+      <td>0.41203</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Iceland</td>
+      <td>7.501</td>
+      <td>1.42666</td>
+      <td>1.18326</td>
+      <td>0.86733</td>
+      <td>0.14975</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Norway</td>
+      <td>7.498</td>
+      <td>1.57744</td>
+      <td>1.12690</td>
+      <td>0.79579</td>
+      <td>0.35776</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Finland</td>
+      <td>7.413</td>
+      <td>1.40598</td>
+      <td>1.13464</td>
+      <td>0.81091</td>
+      <td>0.41004</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Handle missing values</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Country            0
+Happiness_Score    0
+Economy            0
+Family             0
+Health             0
+Trust              0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="create-flag">
+<h2>1.2 Create flag<a class="headerlink" href="#create-flag" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Happy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Happiness_Score&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">5.5</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country</th>
+      <th>Happiness_Score</th>
+      <th>Economy</th>
+      <th>Family</th>
+      <th>Health</th>
+      <th>Trust</th>
+      <th>Happy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Denmark</td>
+      <td>7.526</td>
+      <td>1.44178</td>
+      <td>1.16374</td>
+      <td>0.79504</td>
+      <td>0.44453</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Switzerland</td>
+      <td>7.509</td>
+      <td>1.52733</td>
+      <td>1.14524</td>
+      <td>0.86303</td>
+      <td>0.41203</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Iceland</td>
+      <td>7.501</td>
+      <td>1.42666</td>
+      <td>1.18326</td>
+      <td>0.86733</td>
+      <td>0.14975</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Norway</td>
+      <td>7.498</td>
+      <td>1.57744</td>
+      <td>1.12690</td>
+      <td>0.79579</td>
+      <td>0.35776</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Finland</td>
+      <td>7.413</td>
+      <td>1.40598</td>
+      <td>1.13464</td>
+      <td>0.81091</td>
+      <td>0.41004</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>Benin</td>
+      <td>3.484</td>
+      <td>0.39499</td>
+      <td>0.10419</td>
+      <td>0.21028</td>
+      <td>0.06681</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Afghanistan</td>
+      <td>3.360</td>
+      <td>0.38227</td>
+      <td>0.11037</td>
+      <td>0.17344</td>
+      <td>0.07112</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Togo</td>
+      <td>3.303</td>
+      <td>0.28123</td>
+      <td>0.00000</td>
+      <td>0.24811</td>
+      <td>0.11587</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>Syria</td>
+      <td>3.069</td>
+      <td>0.74719</td>
+      <td>0.14866</td>
+      <td>0.62994</td>
+      <td>0.17233</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>Burundi</td>
+      <td>2.905</td>
+      <td>0.06831</td>
+      <td>0.23442</td>
+      <td>0.15747</td>
+      <td>0.09419</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+<p>157 rows × 7 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">Happy</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No     84
+Yes    73
+Name: Happy, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="drop-and-data-format">
+<h2>1.3 Drop and data format<a class="headerlink" href="#drop-and-data-format" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Happiness_Score&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 157 entries, 0 to 156
+Data columns (total 6 columns):
+ #   Column   Non-Null Count  Dtype  
+---  ------   --------------  -----  
+ 0   Country  157 non-null    object 
+ 1   Economy  157 non-null    float64
+ 2   Family   157 non-null    float64
+ 3   Health   157 non-null    float64
+ 4   Trust    157 non-null    float64
+ 5   Happy    157 non-null    object 
+dtypes: float64(4), object(2)
+memory usage: 7.5+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Change data types</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Happy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Happy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="distribution">
+<h2>1.4 Distribution<a class="headerlink" href="#distribution" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Happy&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/logistic-regression_28_0.png" src="../_images/logistic-regression_28_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="correlation">
+<h2>1.5 Correlation<a class="headerlink" href="#correlation" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inspect relationship between variables (correlation)</span>
+<span class="c1"># Calculate correlation using the default method ( &quot;pearson&quot;)</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="c1"># optimize aesthetics: generate mask for removing duplicate / unnecessary info</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+<span class="n">mask</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices_from</span><span class="p">(</span><span class="n">mask</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="c1"># Generate a custom diverging colormap as indicator for correlations:</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">220</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/logistic-regression_30_0.png" src="../_images/logistic-regression_30_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="a-model-with-all-predictors">
+<h2>2a) Model with all predictors<a class="headerlink" href="#a-model-with-all-predictors" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">glm</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Happy ~ Economy + Family + Health + Trust&#39;</span> <span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Binomial</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                      Generalized Linear Model Regression Results                      
+=======================================================================================
+Dep. Variable:     [&#39;Happy[No]&#39;, &#39;Happy[Yes]&#39;]   No. Observations:                  157
+Model:                                     GLM   Df Residuals:                      152
+Model Family:                         Binomial   Df Model:                            4
+Link Function:                           logit   Scale:                          1.0000
+Method:                                   IRLS   Log-Likelihood:                -44.611
+Date:                         Sun, 12 Dec 2021   Deviance:                       89.223
+Time:                                 21:08:54   Pearson chi2:                     126.
+No. Iterations:                              7   Pseudo R-squ. (CS):             0.5565
+Covariance Type:                     nonrobust                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     12.5255      2.163      5.791      0.000       8.286      16.764
+Economy       -2.7402      1.435     -1.910      0.056      -5.552       0.072
+Family        -8.0509      2.021     -3.984      0.000     -12.012      -4.090
+Health        -3.8342      2.371     -1.617      0.106      -8.480       0.812
+Trust         -5.1377      3.726     -1.379      0.168     -12.441       2.165
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that Statsmodels decoded the dependent variable as Happy “No” and Happy “Yes”. Since “No” comes first, the model will predict the label “No”.</p>
+</div>
+<div class="section" id="b-update-model">
+<h2>2. b) Update Model<a class="headerlink" href="#b-update-model" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and fit logistic regression model</span>
+<span class="n">model_2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">glm</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;Happy ~ Economy + Family&#39;</span> <span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Binomial</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model_2</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                      Generalized Linear Model Regression Results                      
+=======================================================================================
+Dep. Variable:     [&#39;Happy[No]&#39;, &#39;Happy[Yes]&#39;]   No. Observations:                  157
+Model:                                     GLM   Df Residuals:                      154
+Model Family:                         Binomial   Df Model:                            2
+Link Function:                           logit   Scale:                          1.0000
+Method:                                   IRLS   Log-Likelihood:                -46.804
+Date:                         Sun, 12 Dec 2021   Deviance:                       93.608
+Time:                                 21:08:54   Pearson chi2:                     93.5
+No. Iterations:                              7   Pseudo R-squ. (CS):             0.5440
+Covariance Type:                     nonrobust                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     11.4291      1.892      6.042      0.000       7.722      15.137
+Economy       -4.3753      1.113     -3.932      0.000      -6.556      -2.194
+Family        -8.0976      1.922     -4.212      0.000     -11.865      -4.330
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="c-predict">
+<h2>2c) Predict<a class="headerlink" href="#c-predict" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict and join probabilty to original dataframe</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Probability_no&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_2</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country</th>
+      <th>Economy</th>
+      <th>Family</th>
+      <th>Health</th>
+      <th>Trust</th>
+      <th>Happy</th>
+      <th>Probability_no</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Denmark</td>
+      <td>1.44178</td>
+      <td>1.16374</td>
+      <td>0.79504</td>
+      <td>0.44453</td>
+      <td>Yes</td>
+      <td>0.013352</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Switzerland</td>
+      <td>1.52733</td>
+      <td>1.14524</td>
+      <td>0.86303</td>
+      <td>0.41203</td>
+      <td>Yes</td>
+      <td>0.010696</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Iceland</td>
+      <td>1.42666</td>
+      <td>1.18326</td>
+      <td>0.86733</td>
+      <td>0.14975</td>
+      <td>Yes</td>
+      <td>0.012194</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Norway</td>
+      <td>1.57744</td>
+      <td>1.12690</td>
+      <td>0.79579</td>
+      <td>0.35776</td>
+      <td>Yes</td>
+      <td>0.009973</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Finland</td>
+      <td>1.40598</td>
+      <td>1.13464</td>
+      <td>0.81091</td>
+      <td>0.41004</td>
+      <td>Yes</td>
+      <td>0.019640</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>Benin</td>
+      <td>0.39499</td>
+      <td>0.10419</td>
+      <td>0.21028</td>
+      <td>0.06681</td>
+      <td>No</td>
+      <td>0.999858</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Afghanistan</td>
+      <td>0.38227</td>
+      <td>0.11037</td>
+      <td>0.17344</td>
+      <td>0.07112</td>
+      <td>No</td>
+      <td>0.999858</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Togo</td>
+      <td>0.28123</td>
+      <td>0.00000</td>
+      <td>0.24811</td>
+      <td>0.11587</td>
+      <td>No</td>
+      <td>0.999963</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>Syria</td>
+      <td>0.74719</td>
+      <td>0.14866</td>
+      <td>0.62994</td>
+      <td>0.17233</td>
+      <td>No</td>
+      <td>0.999048</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>Burundi</td>
+      <td>0.06831</td>
+      <td>0.23442</td>
+      <td>0.15747</td>
+      <td>0.09419</td>
+      <td>No</td>
+      <td>0.999902</td>
+    </tr>
+  </tbody>
+</table>
+<p>157 rows × 7 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use thresholds to discretize Probability</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Threshold 0.4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Probability_no&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Threshold 0.5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Probability_no&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Threshold 0.6&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Probability_no&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.6</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Threshold 0.7&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Probability_no&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.7</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country</th>
+      <th>Economy</th>
+      <th>Family</th>
+      <th>Health</th>
+      <th>Trust</th>
+      <th>Happy</th>
+      <th>Probability_no</th>
+      <th>Threshold 0.4</th>
+      <th>Threshold 0.5</th>
+      <th>Threshold 0.6</th>
+      <th>Threshold 0.7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Denmark</td>
+      <td>1.44178</td>
+      <td>1.16374</td>
+      <td>0.79504</td>
+      <td>0.44453</td>
+      <td>Yes</td>
+      <td>0.013352</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Switzerland</td>
+      <td>1.52733</td>
+      <td>1.14524</td>
+      <td>0.86303</td>
+      <td>0.41203</td>
+      <td>Yes</td>
+      <td>0.010696</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Iceland</td>
+      <td>1.42666</td>
+      <td>1.18326</td>
+      <td>0.86733</td>
+      <td>0.14975</td>
+      <td>Yes</td>
+      <td>0.012194</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Norway</td>
+      <td>1.57744</td>
+      <td>1.12690</td>
+      <td>0.79579</td>
+      <td>0.35776</td>
+      <td>Yes</td>
+      <td>0.009973</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Finland</td>
+      <td>1.40598</td>
+      <td>1.13464</td>
+      <td>0.81091</td>
+      <td>0.41004</td>
+      <td>Yes</td>
+      <td>0.019640</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>Benin</td>
+      <td>0.39499</td>
+      <td>0.10419</td>
+      <td>0.21028</td>
+      <td>0.06681</td>
+      <td>No</td>
+      <td>0.999858</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Afghanistan</td>
+      <td>0.38227</td>
+      <td>0.11037</td>
+      <td>0.17344</td>
+      <td>0.07112</td>
+      <td>No</td>
+      <td>0.999858</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Togo</td>
+      <td>0.28123</td>
+      <td>0.00000</td>
+      <td>0.24811</td>
+      <td>0.11587</td>
+      <td>No</td>
+      <td>0.999963</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>Syria</td>
+      <td>0.74719</td>
+      <td>0.14866</td>
+      <td>0.62994</td>
+      <td>0.17233</td>
+      <td>No</td>
+      <td>0.999048</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>Burundi</td>
+      <td>0.06831</td>
+      <td>0.23442</td>
+      <td>0.15747</td>
+      <td>0.09419</td>
+      <td>No</td>
+      <td>0.999902</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+<p>157 rows × 11 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="d-confusion-matrix-metrics">
+<h2>2. d) Confusion Matrix &amp; Metrics<a class="headerlink" href="#d-confusion-matrix-metrics" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">predicted</span><span class="p">):</span>
+    <span class="c1"># Header</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Metrics for: </span><span class="si">{</span><span class="n">predicted</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Confusion Matrix</span>
+    <span class="n">y_actu</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Happy&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">predicted</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+    <span class="n">df_conf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_actu</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df_conf</span><span class="p">)</span>
+    
+    <span class="c1"># Confusion Matrix to variables:</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">df_conf</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">tp</span> <span class="o">=</span> <span class="n">df_conf</span><span class="p">[</span><span class="s1">&#39;Yes&#39;</span><span class="p">][</span><span class="s1">&#39;Yes&#39;</span><span class="p">]</span>
+    <span class="n">tn</span> <span class="o">=</span> <span class="n">df_conf</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">][</span><span class="s1">&#39;No&#39;</span><span class="p">]</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">df_conf</span><span class="p">[</span><span class="s1">&#39;Yes&#39;</span><span class="p">][</span><span class="s1">&#39;No&#39;</span><span class="p">]</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">df_conf</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">][</span><span class="s1">&#39;Yes&#39;</span><span class="p">]</span>
+    
+    <span class="c1"># Metrics</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">tn</span><span class="p">)</span> <span class="o">/</span> <span class="n">pop</span>
+    <span class="n">precision</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span>
+    <span class="n">recall</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span>
+    <span class="n">f1_score</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">((</span><span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy:  </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Recall:    </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;F1 Score:  </span><span class="si">{</span><span class="n">f1_score</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;Threshold 0.4&#39;</span><span class="p">)</span>
+<span class="n">print_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;Threshold 0.5&#39;</span><span class="p">)</span>
+<span class="n">print_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;Threshold 0.6&#39;</span><span class="p">)</span>
+<span class="n">print_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;Threshold 0.7&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------
+Metrics for: Threshold 0.4
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Predicted</th>
+      <th>No</th>
+      <th>Yes</th>
+    </tr>
+    <tr>
+      <th>Actual</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>No</th>
+      <td>74</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>Yes</th>
+      <td>16</td>
+      <td>57</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy:  0.8344
+Precision: 0.8507
+Recall:    0.7808
+F1 Score:  0.8143 
+
+--------------------------------------------------
+Metrics for: Threshold 0.5
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Predicted</th>
+      <th>No</th>
+      <th>Yes</th>
+    </tr>
+    <tr>
+      <th>Actual</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>No</th>
+      <td>73</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>Yes</th>
+      <td>13</td>
+      <td>60</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy:  0.8471
+Precision: 0.8451
+Recall:    0.8219
+F1 Score:  0.8333 
+
+--------------------------------------------------
+Metrics for: Threshold 0.6
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Predicted</th>
+      <th>No</th>
+      <th>Yes</th>
+    </tr>
+    <tr>
+      <th>Actual</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>No</th>
+      <td>67</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>Yes</th>
+      <td>9</td>
+      <td>64</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy:  0.8344
+Precision: 0.7901
+Recall:    0.8767
+F1 Score:  0.8312 
+
+--------------------------------------------------
+Metrics for: Threshold 0.7
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Predicted</th>
+      <th>No</th>
+      <th>Yes</th>
+    </tr>
+    <tr>
+      <th>Actual</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>No</th>
+      <td>62</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>Yes</th>
+      <td>5</td>
+      <td>68</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy:  0.8280
+Precision: 0.7556
+Recall:    0.9315
+F1 Score:  0.8344 
+</pre></div>
+</div>
+</div>
+</div>
+<p>General examples to explain the concepts:</p>
+<ul class="simple">
+<li><p>When we have a case where it is important to predict true positives correctly and ther is a cost associated with false positives, then we should use precision.</p></li>
+<li><p>The metric recall would be a good metric if we want to target as many true positive cases as possible and don’t care a lot about false positives.</p></li>
+<li><p>If we want a balance between recall and precision, we should use the F-Score.</p></li>
+</ul>
+</div>
+<div class="section" id="e-use-train-test-data">
+<h2>2. e) Use train test data<a class="headerlink" href="#e-use-train-test-data" title="Permalink to this headline">¶</a></h2>
+<p>If we use train and test data, we need to change some of the steps above since we make use of a scikit learn library.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Encode happy = 0 and not happy = 1. Convert to float</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Happy&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select features</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Economy&#39;</span><span class="p">,</span> <span class="s1">&#39;Family&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train test split</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">train_X</span><span class="p">,</span> <span class="n">test_X</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span> <span class="n">test_y</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training size:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_X</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test size:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_X</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training size: 109
+Test size: 48
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train logistic regression model with training set</span>
+<span class="n">logit</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">Logit</span><span class="p">(</span><span class="n">train_y</span><span class="p">,</span> <span class="n">train_X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.668028
+         Iterations 4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">logit</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                     No   No. Observations:                  109
+Model:                          Logit   Df Residuals:                      107
+Method:                           MLE   Df Model:                            1
+Date:                Sun, 12 Dec 2021   Pseudo R-squ.:                 0.02285
+Time:                        21:08:54   Log-Likelihood:                -72.815
+converged:                       True   LL-Null:                       -74.518
+Covariance Type:            nonrobust   LLR p-value:                   0.06499
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Economy       -1.2641      0.613     -2.062      0.039      -2.466      -0.062
+Family         1.2158      0.739      1.644      0.100      -0.234       2.665
+==============================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create empty dataframe</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="c1"># include prediction from test data</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Probability&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate metrics</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Happy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">test_y</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span>  
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Threshold 0.5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Probability&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span>  
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Probability</th>
+      <th>Happy</th>
+      <th>Threshold 0.5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>147</th>
+      <td>0.551640</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>0.386656</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>0.477599</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>0.407905</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>0.273433</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>0.340084</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>0.378483</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_metrics</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;Threshold 0.5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--------------------------------------------------
+Metrics for: Threshold 0.5
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Predicted</th>
+      <th>No</th>
+      <th>Yes</th>
+    </tr>
+    <tr>
+      <th>Actual</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>No</th>
+      <td>9</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>Yes</th>
+      <td>1</td>
+      <td>25</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy:  0.7083
+Precision: 0.6579
+Recall:    0.9615
+F1 Score:  0.7812 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Jan Kirenz<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
