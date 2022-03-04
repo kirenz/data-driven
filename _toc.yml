@@ -10,3 +10,8 @@ parts:
   - caption: Plotly
     chapters:
     - file: docs/plotly-template.ipynb
+  - caption: Deep Learning
+    chapters:
+    - file: docs/deep-learning.md  
+    - file: docs/computer-vision.md
+    - file: docs/convolutional.md  
